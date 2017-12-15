@@ -19,5 +19,5 @@
     "predeploy": "yarn run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://jb-1980.github.io/joseph.gilgen.me"
+  "homepage": "https://joseph.gilgen.me"
 }
