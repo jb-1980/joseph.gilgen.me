@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>pomodo clock</title>
+    <link href="https://fonts.googleapis.com/css?family=Gochi+Hand" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Rancho" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css">
+    <link rel="stylesheet prefetch" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <style>
+      /* vertical-centered text */
+      .text-vcenter {
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle;
+      }
+      .text-vcenter h1 {
+        font-size: 3.5em;
+        font-weight: 700;
+        margin: 0;
+        padding: 0;
+      }
+      .text-vcenter h2{
+        font-size:3em;
+        font-weight:500;
+      }
+
+      body {
+        background-color: rgba(30,30,30,1);
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+      }
+
+      .clock-canvas{
+        display: table;
+        height: 100%;
+        position: relative;
+        width: 100%;
+      }
+
+      .title-text{
+        font-size:5em;
+        text-align:center;
+        color:#FFF;
+
+      }
+      .text-gochi{
+        font-family:"Gochi Hand";
+      }
+
+      .text-rancho{
+        font-family:"Rancho";
+      }
+
+      .text-white{
+        color:#FFF;
+      }
+      .plus-minus{
+        cursor:pointer;
+        font-size:0.7em;
+      }
+      .clock-settings{
+        min-width:500px;
+        display:inline-block;
+        font-size:3em;
+      }
+
+      .hidden{
+        display:none;
+      }
+
+      .noselect {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      .inline-block{
+        display:inline-block;
+      }
+
+      #reset-button{
+        cursor:pointer;
+        color:#FFF;
+        font-size:3em;
+      }
+
+      .text-ubuntu{
+        font-family:'Ubuntu';
+        font-style:normal;
+      }
+
+      .width-50{
+        display:inline-block;
+        width:50px;
+      }
+    </style>
+  </head>
+
+<body translate="no">
+
+  <audio id="audio" class="hidden">
+    <source src="https://s3.amazonaws.com/freecodecamp/simonSound2.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  <section class="clock-canvas container">
+    <div class="row">
+      <div class="col-md-12">
+        <p class="title-text text-rancho">Gilgen Labs</p>
+        <h2 class="text-white text-center text-gochi">Pomodo Clock</h2>
+      </div>
+    </div>
+    <div class="text-center">
+      <div class="row clock-settings text-white">
+        <div class="col-md-6 noselect">
+          <h3>Break Length</h3>
+          <span id="break-minus" class="plus-minus minus">−</span>
+          <span id="break-length" class="text-ubuntu width-50">5</span>
+          <span id="break-plus" class="plus-minus plus">+</span>
+        </div>
+        <div class="col-md-6 noselect">
+          <h3>Session Length</h3>
+          <span id="session-minus" class="plus-minus minus">−</span>
+          <span id="session-length" class="text-ubuntu width-50">25</span>
+          <span id="session-plus" class="plus-minus">+</span>
+        </div>
+      </div>
+    </div>
+    <div class="row text-center">
+      <div class="inline-block">
+        <div class="col-md-12">
+          <canvas id="pomodo-clock" width="350" height="350px"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="row text-center">
+      <span id="reset-button" class="text-rancho">reset</span>
+    </div>
+  </section>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+
+
+  <script>
+  var audio = document.getElementById("audio")
+
+var clsClock = function() {
+  // Private vars
+  var startAt = 0 // Time of last start / resume. (0 if not running)
+  var session = true // is session or break
+  var running = false
+  var remainingTime = 0
+  var now = function() {
+    return new Date().getTime()
+  }
+  var sessionBreak = function() {
+    return session ? "#session-length" : "#break-length"
+  }
+  // Public methods
+  // Start or resume
+
+  this.getRemainingTime = function() {
+    return remainingTime
+      ? remainingTime
+      : Number($(sessionBreak()).text()) * 60 * 1000
+  }
+
+  this.getSession = function() {
+    return session
+  }
+
+  this.toggleSession = function() {
+    session = !session
+    startAt = now()
+  }
+
+  this.totalTime = function() {
+    return Number($(sessionBreak()).text()) * 60 * 1000
+  }
+
+  this.start = function() {
+    startAt = startAt ? startAt : now()
+    remainingTime = Number($(sessionBreak()).text()) * 60 * 1000
+    running = true
+  }
+
+  // Stop or pause
+  this.stop = function() {
+    // If running, update elapsed time otherwise keep it
+    //lapTime	= startAt ? lapTime - (now() - startAt) : lapTime;
+    startAt = 0 // Paused
+    running = false
+  }
+
+  // Reset
+  this.reset = function() {
+    startAt = 0
+    remainingTime = 0
+    running = false
+    session = true
+  }
+
+  // Duration
+  this.time = function() {
+    var sTime = this.totalTime()
+    remainingTime = startAt ? sTime - (now() - startAt) : sTime
+    return remainingTime
+  }
+
+  this.running = function() {
+    return running
+  }
+}
+
+var x = new clsClock()
+var $time
+var clocktimer
+
+function pad(num, size) {
+  var s = "0000" + num
+  return s.substr(s.length - size)
+}
+
+function formatTime(time) {
+  var m = (s = 0)
+  var newTime = ""
+
+  m = Math.floor(time / (60 * 1000))
+  time = time % (60 * 1000)
+  s = Math.floor(time / 1000)
+
+  newTime = pad(m, 2) + ":" + pad(s, 2)
+  return newTime
+}
+
+function start() {
+  clocktimer = setInterval("createClock()", 100)
+  x.start()
+}
+
+function stop() {
+  x.stop()
+  clearInterval(clocktimer)
+}
+
+function reset() {
+  stop()
+  x.reset()
+  createClock()
+}
+
+function playAudio() {
+  audio.play()
+  setTimeout(function() {
+    audio.play()
+  }, 500)
+  setTimeout(function() {
+    audio.play()
+  }, 1000)
+  setTimeout(function() {
+    audio.play()
+  }, 1500)
+  setTimeout(function() {
+    audio.play()
+  }, 2000)
+}
+
+function createClock() {
+  var angleUnit = 2 * Math.PI / x.totalTime() //1 millisecond to 1 angleUnit
+  var elapsedAng = (x.totalTime() - x.time()) * angleUnit
+  var startAng = -Math.PI / 2
+  var fullCirc = 3 * Math.PI / 2
+  if (elapsedAng >= 2 * Math.PI) {
+    x.toggleSession()
+    angleUnit = 2 * Math.PI / x.totalTime()
+    elapsedAng = (x.totalTime() - x.time()) * angleUnit
+    playAudio()
+  }
+  if (x.getSession()) {
+    var endAng = elapsedAng - Math.PI / 2
+    var stroke = "#00FF00"
+    var text = "Session"
+  } else {
+    var endAng = 3 * Math.PI / 2 - elapsedAng
+    var stroke = "#FF0000"
+    var text = "Break"
+  }
+  var c = document.getElementById("pomodo-clock")
+  var ctx = c.getContext("2d")
+  c.width = c.width
+
+  ctx.strokeStyle = stroke
+  ctx.lineWidth = 6
+  ctx.beginPath()
+  ctx.arc(175, 175, 150, startAng, endAng)
+  ctx.stroke()
+
+  ctx.strokeStyle = "#999"
+  ctx.lineWidth = 6
+  ctx.beginPath()
+  ctx.arc(175, 175, 150, endAng, fullCirc)
+  ctx.stroke()
+
+  ctx.font = "40px Gochi Hand"
+  ctx.textAlign = "center"
+  ctx.strokeStyle = "#FFF"
+  ctx.fillStyle = "#FFF"
+  ctx.fillText(text, 175, 150)
+
+  ctx.font = "50px Rancho"
+  ctx.textAlign = "center"
+  ctx.strokeStyle = "#FFF"
+  ctx.fillStyle = "#FFF"
+  ctx.fillText(formatTime(x.time()), 175, 200)
+}
+
+$("canvas").click(function() {
+  if (!x.running()) {
+    start()
+  } else {
+    stop()
+  }
+})
+
+$("#session-plus").click(function() {
+  var value = Number($("#session-length").text())
+  var newValue = value == 59 ? 59 : value + 1
+  $("#session-length").text(newValue)
+  createClock()
+})
+
+$("#break-plus").click(function() {
+  var value = Number($("#break-length").text())
+  var newValue = value == 59 ? 59 : value + 1
+  $("#break-length").text(newValue)
+  createClock()
+})
+
+$("#session-minus").click(function() {
+  var $this = $(this)
+  var value = Number($("#session-length").text())
+  var newValue = value > 0 ? value - 1 : 0
+  $("#session-length").text(newValue)
+  createClock()
+})
+
+$("#break-minus").click(function() {
+  var $this = $(this)
+  var value = Number($("#break-length").text())
+  var newValue = value > 0 ? value - 1 : 0
+  $("#break-length").text(newValue)
+  createClock()
+})
+
+$("#reset-button").click(function() {
+  $("#break-length").text("5")
+  $("#session-length").text("25")
+  reset()
+})
+
+$(document).ready(function() {
+  createClock()
+})
+//# sourceURL=pen.js
+</script>
+</body>
+</html>

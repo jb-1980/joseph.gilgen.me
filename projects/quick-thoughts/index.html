@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Quick Thoughts</title>
+    <link rel="stylesheet prefetch" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <style>
+    .quotebox{
+      width:400px;
+      display:inline-block;
+      margin:50px;
+      padding:7px;
+      background-image: -webkit-linear-gradient(rgba(255,255,255,0.3),rgba(255,255,255,0.4),rgba(255,255,255,0.2));
+      background-image: -moz-linear-gradient(rgba(255,255,255,0.3),rgba(255,255,255,0.4),rgba(255,255,255,0.2));
+      background-image: linear-gradient(rgba(255,255,255,0.3),rgba(255,255,255,0.4),rgba(255,255,255,0.2));
+      border-radius:10px;
+      cursor:pointer;
+    }
+
+    img.bg {
+      /* Set rules to fill background */
+      min-height: 100%;
+      min-width: 1024px;
+
+      /* Set up proportionate scaling */
+      width: 100%;
+      height: auto;
+
+      /* Set up positioning */
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index:-2;
+    }
+
+    @media screen and (max-width: 1024px) { /* Specific to this particular image */
+      img.bg {
+        left: 50%;
+        margin-left: -512px;   /* 50% */
+      }
+    }
+    </style>
+  </head>
+  <body>
+    <img class="bg" src="https://drive.google.com/uc?id=0B6XUQ5ifOVteSFY0c3luQTNMdlU"/>
+    <h1 class="text-center">Quick Thoughts</h1>
+    <h3 class="text-center">A quick thought to quicken the mind!</h3>
+    <div class="text-center">
+      <div class="quotebox">
+        <h4 class="text-center" id="quote">
+          Click to get a quick thought.
+        </h4>
+        <p class="text-right"><span id="author"></span></p>
+      </div>
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    $(".quotebox").click(function() {
+  $.ajax({
+    url: "https://api.forismatic.com/api/1.0/",
+    dataType: "jsonp",
+    data: { method: "getQuote", format: "jsonp", lang: "en" },
+    method: "POST",
+    success: function(msg) {
+      console.log(msg)
+      var auth = msg.quoteAuthor ? msg.quoteAuthor : "Unknown"
+      $("#quote").html(msg.quoteText)
+      $("#author").html("&minus; " + auth)
+    },
+    error: function(msg) {
+      console.log(msg)
+      $("#quote").html(
+        "<p>There was an error retrieving the quote,<br/>Click again!</p>"
+      )
+      $("#author").html("&minus; The Server")
+    },
+    jsonp: "jsonp",
+  })
+})
+</script>
+  </body>
+</html>
