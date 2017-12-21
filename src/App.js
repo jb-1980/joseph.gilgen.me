@@ -1,39 +1,28 @@
-import React from 'react'
-import { StyleSheet, css } from 'aphrodite'
+import React from "react"
+import { StyleSheet, css } from "aphrodite"
 
-import NavBar from './components/navbar'
-import FocusedContent from './components/FocusedContent'
+import NavBar from "./components/navbar"
+import AboutMe from "./components/about-me"
+import Projects from "./components/projects"
+import Contact from "./components/contact"
 
-
-
-export default class App extends React.Component {
-  constructor(){
-    super()
-    this.state = {contentPage: 'profile'}
-    this.changeContent = this.changeContent.bind(this)
-  }
-
-  changeContent(contentPage) {
-    this.setState({ contentPage })
-  }
-
-  render() {
-    const { contentPage } = this.state
-
-    return (
-      <div className={css(styles.appWrapper)}>
-        <NavBar changeContent={this.changeContent}/>
-        <FocusedContent selected={contentPage}/>
-      </div>
-    )
-  }
-}
+const App = () => (
+  <div className={css(styles.appWrapper)}>
+    <NavBar />
+    <AboutMe />
+    <Projects />
+    <Contact />
+  </div>
+)
 
 const styles = StyleSheet.create({
   appWrapper: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
-  }
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    background: "radial-gradient(#EAB7A0,#F1CFC0, #F8E7DF)",
+  },
 })
+
+export default App

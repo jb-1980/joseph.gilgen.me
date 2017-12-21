@@ -1,0 +1,181 @@
+<html lang="en">
+  <head>
+
+    <meta charset="UTF-8">
+    <title>Calculator</title>
+    <link rel="stylesheet prefetch" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu);
+
+      html,body{
+        height:100%;
+      }
+
+      .logo{
+        font-size:2em;
+        font-family:ubuntu;
+      }
+
+      .calc-container{
+        height:100%;
+        background-color:#E08764;
+        background-size:100%;
+        background-image: -webkit-radial-gradient(center, ellipse cover, #e59b7e 0%, #dd7d57 100%);
+        background-image: -moz-radial-gradient(center, ellipse cover, #e59b7e 0%, #dd7d57 100%);
+        background-image: radial-gradient(center, ellipse cover, #e59b7e 0%, #dd7d57 100%);
+      }
+
+      .calculator{
+        width:400px;
+        height:500px;
+        display:inline-block;
+        margin:50px;
+        padding:10px;
+        background-image: -webkit-linear-gradient(rgba(255,255,255,0.3),rgba(255,255,255,0.4),rgba(255,255,255,0.2));
+        background-image: -moz-linear-gradient(rgba(255,255,255,0.3),rgba(255,255,255,0.4),rgba(255,255,255,0.2));
+        background-image: linear-gradient(rgba(255,255,255,0.5),rgba(255,255,255,0.4),rgba(255,255,255,0.2));
+        border-radius:10px;
+        cursor:pointer;
+        background-color:inherit;
+        border:3px solid #dd7d57;
+        box-shadow: 1px 1px 15px 1px;
+      }
+
+      .display{
+        width:90%;
+        padding:10px;
+        background-color:#AAA;
+        border-radius:5px;
+        border: solid 5px #c9c9c9;
+        transition: border 0.3s;
+        text-align:right;
+      }
+
+      #buttons-table{
+        margin:auto;
+      }
+
+      .btn-calc{
+        width:70px;
+        height:70px;
+        background-image: -webkit-radial-gradient(center, ellipse cover, #e59b7e 0%, #dd7d57 100%);
+        background-image: -moz-radial-gradient(center, ellipse cover, #e59b7e 0%, #dd7d57 100%);
+        background-image: radial-gradient(center, ellipse cover, #e59b7e 0%, #dd7d57 100%);
+        border:3px solid #dd7d57;
+        margin:2px;
+        border-radius:20px;
+        vertical-align:top;
+        font-size:1.3em;
+      }
+
+      .last-row{
+        position:relative;
+        left:-40px;
+      }
+
+      .second-row{
+        display:inline-block;
+        height:75px;
+        vertical-align:top;
+      }
+
+      .btn-plus{
+        height:145px;
+        position:relative;
+        top
+      }
+    </style>
+  </head>
+  <body>
+    <div class="calc-container text-center">
+      <div class="calculator">
+        <div class="">
+          <span class="logo">Gilgen Labs</span>
+        </div>
+        <div class="">
+          <input type="text" class="display" name="function" id="calc-display" data-string="" readonly="">
+        </div>
+        <div class="">
+          <button class="btn-calc" data-char="AC">AC</button>
+          <button class="btn-calc" data-char="CE">CE</button>
+          <button class="btn-calc" data-char="%">%</button>
+          <button class="btn-calc" data-char="/">÷</button>
+        </div>
+        <div class="">
+          <button class="btn-calc" data-char="7">7</button>
+          <button class="btn-calc" data-char="8">8</button>
+          <button class="btn-calc" data-char="9">9</button>
+          <button class="btn-calc" data-char="*">×</button>
+        </div>
+        <div class="">
+          <button class="btn-calc">4</button>
+          <button class="btn-calc">5</button>
+          <button class="btn-calc">6</button>
+          <button class="btn-calc">−</button>
+        </div>
+        <div class="second-row">
+          <button class="btn-calc">1</button>
+          <button class="btn-calc">2</button>
+          <button class="btn-calc">3</button>
+          <button class="btn-calc btn-plus">+</button>
+        </div>
+        <div class="last-row">
+          <button class="btn-calc">0</button>
+          <button class="btn-calc">.</button>
+          <button class="btn-calc">=</button>
+        </div>
+      </div>
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script>
+    $(".btn-calc").click(function() {
+  var $this = $(this)
+  var value = $this.text()
+  var calcDisp = $("#calc-display").val()
+  var calcData = $("#calc-display").attr("data-string")
+  var dataValue = ""
+
+  calcDisp = calcData === "answer" ? "" : calcDisp
+
+  switch (value) {
+    case "×":
+      dataValue = "*"
+      break
+    case "÷":
+      dataValue = "/"
+      break
+    case "−":
+      dataValue = "-"
+      break
+    default:
+      dataValue = value
+  }
+  console.log(calcDisp)
+  switch (value) {
+    case "AC":
+      $("#calc-display").val("")
+      $("#calc-display").attr("data-string", "")
+      break
+    case "CE":
+      $("#calc-display").val(calcDisp.slice(0, -1))
+      $("#calc-display").attr("data-string", calcData.slice(0, -1))
+      break
+    case "%":
+      var answer = eval(calcData + "*100") + "%"
+      $("#calc-display").val(eval(calcData + "*100") + "%")
+      $("#calc-display").attr("data-string", eval(calcData))
+      break
+    case "=":
+      $("#calc-display").val(eval(calcData))
+      $("#calc-display").attr("data-string", eval(calcData))
+      break
+    default:
+      $("#calc-display").val(calcDisp + value)
+      $("#calc-display").attr("data-string", calcData + dataValue)
+  }
+})
+</script>
+  </body>
+</html>

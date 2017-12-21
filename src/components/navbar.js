@@ -1,46 +1,61 @@
-import React from 'react'
-import { StyleSheet, css } from 'aphrodite'
-import ReactTooltip from 'react-tooltip'
+import React from "react"
+import { StyleSheet, css } from "aphrodite"
+import { Link } from "react-scroll"
 
-import { iphone } from '../lib/iphone_media_queries'
+import { iphone } from "../lib/iphone_media_queries"
 
-const NavBar = ({ changeContent }) =>
+const NavBar = () => (
   <div className={css(styles.navbar)}>
-    <i className={`fa fa-id-badge ${css(styles.navbarIcon)}`}
-       data-tip="Me!"
-       onClick={() => changeContent('profile')}></i>
-     <i className={`fa fa-code-fork ${css(styles.navbarIcon)}`}
-       data-tip="Projects"
-       onClick={() => changeContent('projects')}>
-    </i>
-    <i className={`fa fa-code ${css(styles.navbarIcon)}`}
-       data-tip="Skills"
-       onClick={() => changeContent('skills')}>
-    </i>
-    <i className={`fa fa-address-card ${css(styles.navbarIcon)}`}
-       data-tip="Contact"
-       onClick={() => changeContent('contact')}>
-    </i>
-    <ReactTooltip />
+    <Link
+      className={css(styles.navbarItem)}
+      to="about-me"
+      smooth="easeOutQuint"
+      offset={-50}
+    >
+      Me
+    </Link>
+    <Link
+      className={css(styles.navbarItem)}
+      to="projects"
+      smooth="easeOutQuint"
+      offset={-50}
+    >
+      Projects
+    </Link>
+    <Link
+      className={css(styles.navbarItem)}
+      to="contact"
+      smooth="easeOutQuint"
+      offset={-50}
+    >
+      Contact
+    </Link>
   </div>
+)
 
 const styles = StyleSheet.create({
   navbar: {
-    display: 'flex',
-    justifyContent: 'space-around',
-    minWidth: '50%',
-    height: '3rem',
-    padding: '20px',
+    display: "flex",
+    justifyContent: "center",
+    width: "100%",
+    backgroundColor: "rgba(200, 63, 1, 1)",
+    color: "#fff",
+    height: "1.5rem",
+    padding: "7px 20px",
+    fontFamily: "Ubuntu",
+    position: "fixed",
+    top: "0",
     [iphone.iphone5.base]: {
-      width: '100%',
+      width: "100%",
     },
+    zIndex: 10,
   },
-  navbarIcon: {
-    color: '#fff',
-    fontSize: '3rem',
-    cursor: 'pointer',
-    [iphone.iphone5.base]: {
-    },
+  navbarItem: {
+    fontSize: "1.2rem",
+    cursor: "pointer",
+    margin: "0 10px",
+    textTransform: "uppercase",
+    [iphone.iphone5.base]: {},
   },
 })
 
