@@ -4,4 +4,4 @@ This is another [FreeCodeCamp](https://www.freecodecamp.org) project. I really h
 
 TODO:
 
-[ ] - Redo this using React
+* [ ] Redo this using React

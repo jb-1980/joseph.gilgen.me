@@ -1,0 +1,169 @@
+<!doctype html>
+<html>
+  <head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Game of Life</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react-dom.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
+
+    <style>
+      html {
+        min-height: 100%;
+      }
+
+      body {
+        min-height: 100%;
+        background: radial-gradient(#46a8bf, #020404);
+      }
+
+      .head {
+        background-color: #404040;
+        height: 50px;
+        font-size: 2.5em;
+        color: #fff;
+        font-family: monospace;
+      }
+
+      #content {
+        margin-top: 50px;
+        margin-bottom: 50px;
+      }
+
+      .run-pause-clear {
+        text-align: left;
+        margin: auto;
+        width: 700px;
+        border: 1px;
+        border-radius: 15px 15px 0px 0px;
+        padding: 10px;
+        background-color: #404040;
+      }
+
+      .run, .pause, .clear, .iter, .generation {
+        display: inline-block;
+        font-size: 1.5em;
+        padding: 0px 15px;
+        margin: 5px;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        color: #fff;
+      }
+
+      .run, .pause, .clear, .iter {
+        border: 2px solid white;
+        border-radius: 5px;
+        background-color: #333333;
+        cursor: pointer;
+      }
+
+      .generation {
+        float: right;
+      }
+
+      .game-board {
+        background-color: #000;
+        margin: auto;
+        border: 10px solid #404040;
+        border-radius: 7px;
+      }
+
+      .game-board.small {
+        width: 1020px;
+        height: 620px;
+      }
+
+      .game-board.medium {
+        width: 1020px;
+        height: 734.2857142857px;
+      }
+
+      .game-board.large {
+        width: 1020px;
+        height: 820px;
+      }
+
+      .cell {
+        float: left;
+        border: thin solid #191919;
+      }
+
+      .cell.small {
+        width: 20px;
+        height: 20px;
+      }
+
+      .cell.medium {
+        width: 14.2857142857px;
+        height: 14.2857142857px;
+      }
+
+      .cell.large {
+        width: 10px;
+        height: 10px;
+      }
+
+      .cell.young {
+        background: #6cbacc;
+      }
+
+      .cell.old {
+        background: #36899c;
+      }
+
+      .settings-block {
+        display: table;
+        margin: auto;
+        padding: 2px 20px;
+        border: 10px solid #404040;
+        border-radius: 0px 0px 15px 15px;
+        width: 700px;
+        color: #fff;
+        background: #404040;
+      }
+
+      .settings-block > div {
+        display: table-row;
+        padding: 10px;
+      }
+
+      .settings-block > div > div {
+        display: table-cell;
+        padding: 4px;
+      }
+
+      .board-size, .sim-speed {
+        text-align: left;
+        font-size: 1.7em;
+      }
+
+      .setting-btn {
+        border: 2px solid #fff;
+        border-radius: 5px;
+        background-color: #272727;
+        padding: 5px;
+        cursor: pointer;
+      }
+
+      .setting-btn.active {
+        background-color: #46a8bf;
+        color: #404040;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="head text-center">
+      ReactJS Game of Life (click to learn more)
+    </div>
+    <div class="container">
+      <div class="text-center" id="content"></div>
+    </div>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/react-bootstrap/0.28.2/react-bootstrap.js'></script>
+    <script src="index.js" type="text/babel"></script>
+  </body>
+</html>

@@ -1,8 +1,8 @@
 {
   "main.css": "static/css/main.4abf9fec.css",
   "main.css.map": "static/css/main.4abf9fec.css.map",
-  "main.js": "static/js/main.746103ae.js",
-  "main.js.map": "static/js/main.746103ae.js.map",
+  "main.js": "static/js/main.07c7dbed.js",
+  "main.js.map": "static/js/main.07c7dbed.js.map",
   "static/media/devicon.eot": "static/media/devicon.681fa39a.eot",
   "static/media/devicon.svg?-hdf3wh": "static/media/devicon.74e6e6c3.svg",
   "static/media/devicon.ttf?-hdf3wh": "static/media/devicon.29f80b00.ttf",
@@ -13,11 +13,18 @@
   "static/media/fontawesome-webfont.ttf?v=4.7.0": "static/media/fontawesome-webfont.b06871f2.ttf",
   "static/media/fontawesome-webfont.woff2?v=4.7.0": "static/media/fontawesome-webfont.af7ae505.woff2",
   "static/media/fontawesome-webfont.woff?v=4.7.0": "static/media/fontawesome-webfont.fee66e71.woff",
+  "static/media/game-of-life.png": "static/media/game-of-life.6481a091.png",
   "static/media/grade-syncer.png": "static/media/grade-syncer.5d28b07d.png",
   "static/media/js-calculator.png": "static/media/js-calculator.0eea4b84.png",
+  "static/media/local-weather.png": "static/media/local-weather.0a313cb0.png",
   "static/media/mission-explorer.png": "static/media/mission-explorer.08667811.png",
   "static/media/pomodo-clock.png": "static/media/pomodo-clock.bfd70926.png",
   "static/media/profile_img.png": "static/media/profile_img.df3b72f0.png",
   "static/media/quick-thoughts.png": "static/media/quick-thoughts.1ccdcb4c.png",
-  "static/media/student-tracker.png": "static/media/student-tracker.24c5758b.png"
+  "static/media/recipe-box.png": "static/media/recipe-box.2b7cc824.png",
+  "static/media/simon.png": "static/media/simon.6196e787.png",
+  "static/media/student-tracker.png": "static/media/student-tracker.24c5758b.png",
+  "static/media/tic-tac-toe.png": "static/media/tic-tac-toe.2060aa72.png",
+  "static/media/time-microservice.png": "static/media/time-microservice.137ad770.png",
+  "static/media/wikipedia-search.png": "static/media/wikipedia-search.9b992aae.png"
 }

@@ -4,5 +4,4 @@ This [freeCodeCamp](https://www.freecodecamp.org) project had me create a calcul
 
 TODO:
 
-[ ] - Rebuild in React
-
+* [ ] Rebuild in React
