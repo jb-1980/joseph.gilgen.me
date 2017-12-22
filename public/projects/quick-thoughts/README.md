@@ -4,3 +4,7 @@ This is one of my first projects from [FreeCodeCamp](https://www.freecodecamp.or
 
 I think the image may be too much, as it takes noticeably longer to load it. But the page renders before the image, so it is still useable. I may consider revisiting this project in the future to rebuild it with React.
 
+TODO:
+
+* [ ] Redo this using React
+

@@ -1,0 +1,222 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Wikipedia Search</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet prefetch" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <style>
+      html,body{
+        background-color:rgba(155, 89, 182,1.0);
+        height:100%;
+      }
+
+      .search-box{
+        padding-top:30px;
+      }
+
+      .vtext-center{
+        display:table-cell;
+        text-align:center;
+        vertical-align:middle;
+      }
+
+      .search-icon{
+        color:rgba(189, 195, 199,1.0);
+        font-size:4em;
+        border:thin solid purple !important;
+      }
+
+      .search-box input{
+        width:200px;
+        display:inline-block;
+      }
+
+      .color-silver{
+        background-color:rgba(189, 195, 199,1.0)
+      }
+
+      .text-silver{
+        color:rgba(189, 195, 199,1.0);
+      }
+
+      .orbox{
+        padding:3px;
+        margin-top:2px;
+        margin-bottom:2px;
+      }
+
+      .info-box{
+        display:inline-block;
+        width:80%;
+        background-color:rgba(236, 240, 241,1.0);
+        height:auto;
+        padding:20px;
+        margin-top:10px;
+        text-align:left;
+      }
+
+      a .info-box{
+        text-decoration:none;
+        color:rgba(155, 89, 182,1.0);
+      }
+
+      a .info-box:hover{
+        background-color:rgba(236, 240, 241,0.8);
+      }
+
+      .title{
+        padding:5px;
+        font-size:1.3em;
+        font-weight:bold;
+      }
+
+      .description{
+        padding:5px;
+        font-size:1.1em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="search-box">
+      <div class="text-center">
+        <form class="form-inline">
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon color-silver">
+                <span class="glyphicon glyphicon-search"></span>
+              </div>
+              <input type="text" class="form-control" id="exampleInputAmount" autocomplete="off" placeholder="Search Wikipedia">
+            </div>
+          </div>
+          <span class="btn color-silver" id="search">Search</span>
+        </form>
+        <div class="text-silver orbox">OR</div>
+        <div class="btn color-silver" id="random-search">Get Random Article</div>
+      </div>
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script>
+    var endPoint = "https://en.wikipedia.org/w/api.php"
+
+var queryData = {
+  action: "opensearch",
+  search: "",
+  format: "json",
+}
+
+function getData() {
+  $.ajax({
+    url: endPoint,
+    data: queryData,
+    dataType: "jsonp",
+    type: "POST",
+    headers: {
+      "Api-User-Agent": "Example/1.0",
+    },
+    success: function(data) {
+      for (var i = 0; i < data[1].length; i++) {
+        var title = data[1][i],
+          descp = data[2][i] ? data[2][i] : "No description given.",
+          link = data[3][i]
+        var html = '<div class="text-center link-box">'
+        html += '<a href="' + link + '" target="_blank">'
+        html += '<div class="info-box">'
+        html += '<div class="title">' + title + "</div>"
+        html += '<div class="description">' + descp + "</div>"
+        html += "</div>"
+        html += "</a>"
+        html += "</div>"
+        $(".search-box").append(html)
+      }
+      window.CP.exitedLoop(1)
+    },
+    error: function() {
+      console.log("It didn't work")
+    },
+  })
+}
+
+$("#search").click(function() {
+  var val = $("input").val()
+
+  if (!val) return
+
+  queryData.search = val
+
+  $(".vtext-center").addClass("text-center")
+  $(".text-center").removeClass("vtext-center")
+
+  $(".link-box").remove()
+
+  getData()
+})
+
+$("input").on("keydown", function search(e) {
+  if (e.keyCode == 13) {
+    e.preventDefault()
+    var val = $("input").val()
+    if (!val) return
+
+    queryData.search = val
+
+    $(".vtext-center").addClass("text-center")
+    $(".text-center").removeClass("vtext-center")
+
+    $(".link-box").remove()
+
+    getData()
+  }
+})
+
+var randomData = {
+  action: "query",
+  prop: "extracts|info",
+  format: "json",
+  exintro: "",
+  inprop: "url",
+  generator: "random",
+  grnnamespace: 0,
+}
+
+function getRandomData() {
+  $.ajax({
+    url: endPoint,
+    data: randomData,
+    dataType: "jsonp",
+    type: "POST",
+    headers: {
+      "Api-User-Agent": "Example/1.0",
+    },
+    success: function(data) {
+      var key = Object.keys(data.query.pages)[0]
+      var pages = data.query.pages[key]
+      var link = pages.fullurl,
+        title = pages.title,
+        descp = pages.extract
+
+      var html = '<div class="text-center link-box">'
+      html += '<a href="' + link + '" target="_blank">'
+      html += '<div class="info-box">'
+      html += '<div class="title">' + title + "</div>"
+      html += '<div class="description">' + descp + "</div>"
+      html += "</div>"
+      html += "</a>"
+      html += "</div>"
+      $(".search-box").append(html)
+    },
+  })
+}
+
+$("#random-search").click(function() {
+  $(".vtext-center").addClass("text-center")
+  $(".text-center").removeClass("vtext-center")
+
+  $(".link-box").remove()
+
+  getRandomData()
+})
+</script>
+  </body>
+</html>

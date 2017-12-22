@@ -2,6 +2,13 @@ export const TAGS = {
   FREE_CODE_CAMP: "freeCodeCamp",
   JQUERY: "jQuery",
   CANVAS: "canvas",
+  TEACHER_TOOLS: "teacher tools",
+  REACT: "React",
+  FLASK: "Flask",
+  API: "API",
+  NODE: "Node",
+  FULL_STACK: "Full Stack",
+  GAMES: "Games",
 }
 
 export const projects = [
@@ -10,32 +17,53 @@ export const projects = [
     screenshot: require("../images/screenshots/drawable-canvas.png"),
     url: "https://jb-1980.github.io/drawable_canvas/",
     readme: "https://github.com/jb-1980/drawable_canvas/blob/master/README.md",
+    tags: [TAGS.CANVAS, TAGS.TEACHER_TOOLS],
   },
   {
     name: "Student Tracker",
     screenshot: require("../images/screenshots/student-tracker.png"),
     url: "",
     readme: "",
+    tags: [
+      TAGS.TEACHER_TOOLS,
+      TAGS.REACT,
+      TAGS.FLASK,
+      TAGS.API,
+      TAGS.FULL_STACK,
+    ],
   },
   {
     name: "Mission Explorer",
     screenshot: require("../images/screenshots/mission-explorer.png"),
     url: "http://missionexplorer.gilgenlabs.com/",
     readme: "https://github.com/jb-1980/mission_explorer/blob/master/README.md",
+    tags: [
+      TAGS.TEACHER_TOOLS,
+      TAGS.REACT,
+      TAGS.NODE,
+      TAGS.API,
+      TAGS.FULL_STACK,
+    ],
   },
   {
     name: "Grade Syncer",
     screenshot: require("../images/screenshots/grade-syncer.png"),
-    description: `Our math department loves Khan Academy, but without an efficient
-    method to convert progress into grades we felt like we could not reasonably
-    use its content for anything other than remediation. But luckily they have
-    an extensive and well documented API. This project is a UI to connect courses`,
+    url: "https://grade-syncer.gilgenlabs.com",
+    readme: "#",
+    tags: [
+      TAGS.TEACHER_TOOLS,
+      TAGS.REACT,
+      TAGS.FLASK,
+      TAGS.API,
+      TAGS.FULL_STACK,
+    ],
   },
   {
     name: "Quick Thoughts",
     screenshot: require("../images/screenshots/quick-thoughts.png"),
     url: `${process.env.PUBLIC_URL}/projects/quick-thoughts/`,
     readme: `${process.env.PUBLIC_URL}/projects/quick-thoughts/README.md`,
+    tags: [TAGS.FREE_CODE_CAMP, TAGS.JQUERY, TAGS.API],
   },
   {
     name: "Pomodo Clock",
@@ -50,5 +78,55 @@ export const projects = [
     url: `${process.env.PUBLIC_URL}/projects/js-calculator/`,
     readme: `${process.env.PUBLIC_URL}/projects/js-calculator/README.md`,
     tags: [TAGS.FREE_CODE_CAMP, TAGS.JQUERY],
+  },
+  {
+    name: "Local Weather",
+    screenshot: require("../images/screenshots/local-weather.png"),
+    url: `${process.env.PUBLIC_URL}/projects/local-weather/`,
+    readme: `${process.env.PUBLIC_URL}/projects/local-weather/README.md`,
+    tags: [TAGS.FREE_CODE_CAMP, TAGS.JQUERY],
+  },
+  {
+    name: "TIC TAC TOE",
+    screenshot: require("../images/screenshots/tic-tac-toe.png"),
+    url: `${process.env.PUBLIC_URL}/projects/tic-tac-toe/`,
+    readme: `${process.env.PUBLIC_URL}/projects/tic-tac-toe/README.md`,
+    tags: [TAGS.FREE_CODE_CAMP, TAGS.JQUERY, TAGS.GAMES],
+  },
+  {
+    name: "Wikipedia Search",
+    screenshot: require("../images/screenshots/wikipedia-search.png"),
+    url: `${process.env.PUBLIC_URL}/projects/wikipedia-search/`,
+    readme: `${process.env.PUBLIC_URL}/projects/wikipedia-search/README.md`,
+    tags: [TAGS.FREE_CODE_CAMP, TAGS.JQUERY, TAGS.API],
+  },
+  {
+    name: "Simon",
+    screenshot: require("../images/screenshots/simon.png"),
+    url: `${process.env.PUBLIC_URL}/projects/simon/`,
+    readme: `${process.env.PUBLIC_URL}/projects/simon/README.md`,
+    tags: [TAGS.FREE_CODE_CAMP, TAGS.JQUERY, TAGS.GAMES],
+  },
+  {
+    name: "Recipe Box",
+    screenshot: require("../images/screenshots/recipe-box.png"),
+    url: `${process.env.PUBLIC_URL}/projects/recipe-box/`,
+    readme: `${process.env.PUBLIC_URL}/projects/recipe-box/README.md`,
+    tags: [TAGS.FREE_CODE_CAMP, TAGS.REACT],
+  },
+  {
+    name: "Game of Life",
+    screenshot: require("../images/screenshots/game-of-life.png"),
+    url: `${process.env.PUBLIC_URL}/projects/game-of-life/`,
+    readme: `${process.env.PUBLIC_URL}/projects/game-of-life/README.md`,
+    tags: [TAGS.FREE_CODE_CAMP, TAGS.REACT],
+  },
+  {
+    name: "Time Microservice",
+    screenshot: require("../images/screenshots/time-microservice.png"),
+    url: "https://fcc-timemicroservice.herokuapp.com/",
+    readme:
+      "https://github.com/jb-1980/fcc-time-microserver/blob/master/README.md",
+    tags: [TAGS.FREE_CODE_CAMP, TAGS.BACK_END],
   },
 ]

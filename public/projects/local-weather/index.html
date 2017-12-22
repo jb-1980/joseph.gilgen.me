@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet prefetch" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <style>
+      img.bg {
+        /* Set rules to fill background */
+        min-height: 100%;
+        min-width: 1920px;
+
+        /* Set up proportionate scaling */
+        width: 100%;
+        height: auto;
+
+        /* Set up positioning */
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index:-2;
+      }
+
+      @media screen and (max-width: 1024px) { /* Specific to this particular image */
+        img.bg {
+          left: 50%;
+          margin-left: -512px;   /* 50% */
+        }
+      }
+
+      .weather-box{
+        display:inline-block;
+        background-color:rgba(255,255,255,0.3);
+        width:50%;
+        height:500px;
+      }
+
+      .weather-city{
+        font-size:2em;
+      }
+
+      .weather-quick{
+        font-size:3em;
+      }
+
+      .weather-table{
+        margin:auto;
+      }
+
+      .weather-table td{
+        padding:5px;
+        font-size:1.3em;
+      }
+    </style>
+  </head>
+  <body>
+    <img class="bg" src="https://drive.google.com/uc?id=0B6XUQ5ifOVteQmtqS3pzYXl1M0E">
+    <section class="container">
+      <h1 class="text-center">Gilgen Labs Weather App</h1>
+      <div class="container text-center">
+        <div class="weather-box">
+          <div class="weather-city">
+            Weather for <span id="city">Mesa</span>, <span id="region">Arizona</span>
+          </div>
+          <div class="weather-quick">
+            <img id="weather-icon" src="https://openweathermap.org/img/w/02d.png"> <span id="temp">52</span>° F
+          </div>
+          <div class="weather-details">
+            <table class="weather-table">
+              <tbody><tr>
+                <td class="text-right">High:</td>
+                <td id="high" class="text-left">54° F</td>
+              </tr>
+              <tr>
+                <td class="text-right">Low:</td>
+                <td id="low" class="text-left">50° F</td>
+              </tr>
+              <tr>
+                <td class="text-right">Wind:</td>
+                <td id="wind" class="text-left">SW 10.29mph</td>
+              </tr>
+              <tr>
+                <td class="text-right">Pressure:</td>
+                <td id="pressure" class="text-left">30 hPa</td>
+              </tr>
+              <tr>
+                <td class="text-right">Humidity:</td>
+                <td id="humidity" class="text-left">30%</td>
+              </tr>
+              <tr>
+                <td class="text-right">Sunrise:</td>
+                <td id="sunrise" class="text-left">7:28 AM</td>
+              </tr>
+              <tr>
+                <td class="text-right">Sunset:</td>
+                <td id="sunset" class="text-left">5:24 PM</td>
+              </tr>
+            </tbody></table>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script>
+    function getDirection(deg) {
+  if (deg < 45 - 22.5) return "N"
+  if (deg < 45 + 22.5) return "NE"
+  if (deg < 45 + 22.5 * 3) return "E"
+  if (deg < 45 + 22.5 * 5) return "SE"
+  if (deg < 45 + 22.5 * 7) return "S"
+  if (deg < 45 + 22.5 * 9) return "SW"
+  if (deg < 45 + 22.5 * 11) return "W"
+  if (deg < 45 + 22.5 * 13) return "NW"
+  if (deg < 45 + 22.5 * 14) return "N"
+}
+
+function getWeather(position) {
+  $.get(
+    "https://api.openweathermap.org/data/2.5/weather?lat=" +
+      position[0] +
+      "&lon=" +
+      position[1] +
+      "&units=imperial&appid=367c953c4e7ca60ea4ffc42cbc91c02e",
+    function(response) {
+      $("#weather-icon").attr(
+        "src",
+        "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png"
+      )
+      var sunrise = new Date(response.sys.sunrise * 1000)
+      var sunset = new Date(response.sys.sunset * 1000)
+      var wind =
+        getDirection(response.wind.deg) + " " + response.wind.speed + "mph"
+      $("#temp").text(Math.round(response.main.temp))
+      $("#high").html(Math.round(response.main.temp_max) + "&deg; F")
+      $("#low").html(Math.round(response.main.temp_min) + "&deg; F")
+      $("#wind").text(wind)
+      $("#pressure").text(response.main.humidity + " hPa")
+      $("#humidity").text(response.main.humidity + "%")
+      $("#sunrise").text(
+        sunrise.getHours() + ":" + sunrise.getMinutes() + " AM"
+      )
+      $("#sunset").text(
+        sunset.getHours() - 12 + ":" + sunset.getMinutes() + " PM"
+      )
+    }
+  )
+}
+
+$.get(
+  "https://ipinfo.io",
+  function(response) {
+    $("#city").text(response.city)
+    $("#region").text(response.region)
+    var coords = response.loc.split(",")
+    getWeather(coords)
+  },
+  "jsonp"
+)
+</script>
+  </body>
+</html>

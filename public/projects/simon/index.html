@@ -1,0 +1,516 @@
+<!doctype html>
+<html>
+  <head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Simon</title>
+
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Orbitron);
+
+      .simon{
+        width:650px;
+        height:650px;
+        background-color:#000;
+        border-radius:50%;
+        z-index:-1;
+        margin:auto;
+        -webkit-touch-callout: none;
+          -webkit-user-select: none;
+          -khtml-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+      }
+
+      .settings{
+        position:relative;
+        text-align:center;
+        font-family:Orbitron;
+        width:325px;
+        height:325px;
+        background-color:#E0E0E0;
+        border-radius:50%;
+        border:20px solid black;
+        top:-502.5px;
+        left:142.5px;
+        z-index:1;
+      }
+
+      .pad{
+        width:300px;
+        height:300px;
+        display:inline-block;
+        margin:10px;
+        cursor:pointer;
+        z-index:2;
+      }
+
+      .pad-row{
+        display:inline-block;
+        width:100%;
+        text-align:center;
+      }
+      .green{
+        background:#008000;
+        border-top-left-radius: 300px;
+      }
+
+      .red{
+        background:#C62828;
+        border-top-right-radius: 300px;
+      }
+
+      .blue{
+        background:#2962FF;
+        border-bottom-right-radius: 300px;
+      }
+
+      .yellow{
+        background:#FFEB3B;
+        border-bottom-left-radius: 300px;
+      }
+
+      .logo{
+        text-align:center;
+        font-size:4em;
+        font-weight:bold;
+        line-height:60px;
+        margin:auto;
+        margin-top:70px;
+        width:210px;
+      }
+
+      .settings-row{
+        margin:auto;
+        margin-top:12px;
+        margin-bottom:12px;
+        display:table;
+        text-align:center;
+        vertical-align:middle;
+        height:100px;
+
+      }
+
+      .count{
+        display:table-cell;
+        padding:5px;
+        width:120px;
+        vertical-align:bottom;
+      }
+
+      .count-display{
+        background:#3E2723;
+        width:120px;
+        height:50px;
+        color:#551111;
+        line-height:60px;
+        font-size:50px;
+        border-radius:10px;
+        border:1px solid #000;
+        margin:auto;
+        margin-bottom:2px;
+      }
+
+      .on{
+        color:#F00;
+      }
+
+      .start{
+        display:table-cell;
+        padding:5px;
+        vertical-align:bottom;
+      }
+
+      .button-container{
+
+      }
+
+      .start-button{
+        width:20px;
+        height:20px;
+        background-color:#F00;
+        border-radius:50%;
+        border:2px solid #000;
+        display:inline-block;
+        margin:10px;
+        cursor:pointer;
+      }
+
+      .strict{
+        display:table-cell;
+        padding:5px;
+        vertical-align:bottom;
+      }
+
+      .strict-button{
+        width:20px;
+        height:20px;
+        background-color:#FF0;
+        border-radius:50%;
+        border:2px solid #000;
+        display:inline-block;
+        margin:10px;
+        margin-top:3px;
+        cursor:pointer;
+      }
+
+      .strict-light{
+        width:7px;
+        height:7px;
+        background:#000;
+        display:inline-block;
+        border:1px solid #000;
+        border-radius:50%;
+      }
+
+      .strict-on{
+        background:#F00;
+      }
+
+      .off-on-row{
+        display:table;
+        margin:auto;
+        margin-top:20px;
+      }
+
+      .off-on{
+        display:inline-block;
+        margin:3px;
+        margin-bottom:0px;
+        margin-top:4px;
+        width:auto;
+        height:20px;
+        line-height:21px;
+        padding:0px 5px;
+        font-size:20px;
+      }
+
+      .on-off-switch{
+        display:table-cell;
+        height:20px;
+        width:42px;
+        background:#000;
+        vertical-align:middle;
+        padding:1px;
+      }
+
+      .switch-style{
+        display:table-cell;
+        width:20px;
+        height:20px;
+        background:#000;
+        border:1px solid #000;
+        border-radius:2px;
+      }
+
+      .switch-on{
+        background:#2196F3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="simon text-center">
+      <div data-action="sound"></div>
+      <div class="pad-row">
+        <div class="pad green" data-tile="green"></div>
+        <div class="pad red" data-tile="red"></div>
+      </div>
+      <div class="pad-row">
+        <div class="pad yellow" data-tile="yellow"></div>
+        <div class="pad blue" data-tile="blue"></div>
+      </div>
+      <div class="settings">
+        <div class="logo">
+          SIMON
+        </div>
+        <div class="settings-row">
+          <div class="count">
+            <div class="count-display off" data-count="">
+              <span class="count-text">00</span>
+            </div>
+            <div>count</div>
+          </div>
+          <div class="start">
+            <div class="start-button" data-action="start"></div>
+            <div>start</div>
+          </div>
+          <div class="strict">
+            <div class="button-container">
+              <div class="strict-light"></div>
+            </div>
+            <div class="button-container">
+              <div class="strict-button" data-action="strict"></div>
+            </div>
+            <div>strict</div>
+          </div>
+        </div>
+        <div class="off-on-row">
+          <div class="off-on">off</div>
+          <div class="on-off-switch">
+            <div class="switch-style switch-on"></div>
+            <div class="switch-style "></div>
+          </div>
+          <div class="off-on">on</div>
+        </div>
+      </div>
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script>
+    /* JS adapted from app @ github: https://github.com/kellyk/javascript-simon/blob/master/js/app/simon.js */
+
+var Simon = function() {
+  //private vars
+  var played = [],
+    copy = [],
+    count = [],
+    winning = true,
+    playing = false,
+    strict = false
+  var colors = {
+    green: "#0F0",
+    blue: "#0091EA",
+    red: "#FF4444",
+    yellow: "#FFFF00",
+  }
+
+  var sounds = {
+    green: "1",
+    blue: "2",
+    red: "3",
+    yellow: "4",
+  }
+  //public methods
+  this.turnOn = function() {
+    var self = this
+    $(".count-display").addClass("on")
+    $("[data-action=strict]").click(function() {
+      self.toggleStrict()
+    })
+    $("[data-action=start]").click(function() {
+      if (playing) return
+      self.startGame()
+    })
+  }
+
+  this.turnOff = function() {
+    played = []
+    copy = []
+    count = 0
+    playing = false
+    winning = true
+    strict = false
+    $(".strict-light").removeClass("strict-on")
+    $(".count-text").html("00")
+    $(".count-display").removeClass("on")
+  }
+
+  this.startGame = function() {
+    played = []
+    copy = []
+    count = 0
+    winning = true
+    playing = true
+    this.addColor()
+  }
+
+  this.addColor = function() {
+    count++
+    var txt = count < 10 ? "0" + count : count
+    $(".count-text").text(txt)
+    played.push(this.randomColor())
+    copy = played.slice(0)
+    this.animate(played)
+  }
+
+  this.playerClick = function(e) {
+    var correctClick = copy.shift()
+    var userClick = $(e.target).data("tile")
+    winning = correctClick === userClick
+    this.checkLose()
+  }
+
+  this.checkLose = function() {
+    // you won the game
+    if (copy.length === 0 && winning && played.length === 20) {
+      this.playWin()
+      this.deactivateBoard()
+      this.winGame()
+    } else if (copy.length === 0 && winning) {
+      // player has completed sequence and not erred
+      this.deactivateBoard()
+      this.addColor()
+    } else if (!winning && !strict) {
+      //non-strict, repeat sequence
+      this.playError()
+      this.deactivateBoard()
+      copy = played.slice(0)
+      this.reanimate()
+    } else if (!winning) {
+      //lost! game over
+      this.playError()
+      this.deactivateBoard()
+      this.endGame()
+    }
+  }
+
+  this.winGame = function() {
+    $(".count-text").text("WIN")
+    $(".count-text").fadeOut(500)
+    $(".count-text").fadeIn(500)
+    $(".count-text").fadeOut(500)
+    $(".count-text").fadeIn(500)
+    var self = this
+    playing = false
+    window.setTimeout(function() {
+      self.startGame()
+    }, 2000)
+  }
+
+  this.endGame = function() {
+    $(".count-text").text("! !")
+    $(".count-text").fadeOut(500)
+    $(".count-text").fadeIn(500)
+    $(".count-text").fadeOut(500)
+    $(".count-text").fadeIn(500)
+    var self = this
+    playing = false
+    window.setTimeout(function() {
+      self.startGame()
+    }, 2000)
+  }
+
+  this.activateBoard = function() {
+    var self = this
+    var originalColor, newColor
+    $(".pad")
+      .on("mousedown", function() {
+        originalColor = $(this).css("background-color")
+        newColor = colors[$(this).data("tile")]
+        $(this).css("background", newColor)
+        self.playSound($(this).data("tile"))
+      })
+      .on("mouseup", function() {
+        $(this).css("background", originalColor)
+      })
+      .on("click", function(e) {
+        self.playerClick(e)
+      })
+  }
+
+  this.deactivateBoard = function() {
+    $(".pad")
+      .off("click")
+      .off("mousedown")
+      .off("mouseup")
+  }
+
+  this.animate = function() {
+    var speed =
+      played.length > 12
+        ? 400
+        : played.length > 8 ? 600 : played.length > 4 ? 800 : 1000
+    var i = 0,
+      self = this,
+      interval = setInterval(function() {
+        self.playSound(played[i])
+        self.lightUp(played[i])
+
+        i++
+        if (i >= played.length) {
+          clearInterval(interval)
+          self.activateBoard()
+        }
+      }, speed)
+  }
+
+  this.reanimate = function() {
+    $(".count-text").fadeOut(500)
+    $(".count-text").fadeIn(500)
+    $(".count-text").fadeOut(500)
+    $(".count-text").fadeIn(500)
+    var self = this
+    window.setTimeout(function() {
+      self.animate(played)
+    }, 2000)
+  }
+
+  this.lightUp = function(tile) {
+    var originalColor = $("[data-tile=" + tile + "]").css("background-color")
+    var newColor = colors[tile]
+    var $tile = $("[data-tile=" + tile + "]").css("background-color", newColor)
+
+    window.setTimeout(function() {
+      $tile.css("background", originalColor)
+    }, 300)
+  }
+
+  this.playSound = function(tile) {
+    var sound = sounds[tile]
+    var audio = $("<audio autoplay></audio>")
+    audio.append(
+      "<source src=https://s3.amazonaws.com/freecodecamp/simonSound" +
+        sound +
+        '.mp3 type="audio/mp3" />'
+    )
+    $("[data-action=sound]").html(audio)
+  }
+
+  this.playError = function() {
+    var audio = $('<audio id="error"></audio>')
+    audio.append(
+      '<source src="https://www.freesound.org/data/previews/67/67454_754949-lq.mp3" type="audio/mp3" />'
+    )
+    $("[data-action=sound]").html(audio)
+    window.setTimeout(function() {
+      var a = document.getElementById("error")
+      a.volume = 0.5
+      a.play()
+    }, 200)
+  }
+
+  this.playWin = function() {
+    var audio = $('<audio id="win"></audio>')
+    audio.append(
+      '<source src="https://www.freesound.org/data/previews/317/317638_3905081-lq.mp3" type="audio/mp3" />'
+    )
+    $("[data-action=sound]").html(audio)
+    window.setTimeout(function() {
+      var a = document.getElementById("win")
+      a.volume = 0.5
+      a.play()
+    }, 200)
+  }
+
+  this.randomColor = function() {
+    var colorKeys = Object.keys(colors)
+    return colorKeys[Math.floor(Math.random() * 4)]
+  }
+
+  this.toggleStrict = function() {
+    if (playing) return
+    strict = !strict
+    if (strict) {
+      $(".strict-light").addClass("strict-on")
+    } else {
+      $(".strict-light").removeClass("strict-on")
+    }
+  }
+}
+
+var simon = new Simon()
+var on = false
+$(".on-off-switch").click(function() {
+  $(".switch-style").toggleClass("switch-on")
+  if (on) {
+    on = false
+    simon.turnOff()
+  } else {
+    on = true
+    simon.turnOn()
+  }
+})
+</script>
+  </body>
+</html>
