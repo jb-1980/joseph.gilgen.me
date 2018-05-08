@@ -6,6 +6,6 @@ The AI is _super_ basic. It just basically looks for an empty space and plays th
 
 TODO:
 
-* [ ] Improve the AI so that it is impossible to win.
+* [x] Improve the AI so that it is impossible to win.
+* [x] Add easy and hard setting
 * [ ] Redo this with React
-
