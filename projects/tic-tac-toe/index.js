@@ -23,8 +23,8 @@ var AI = function(player) {
   this.level = "easy"
 }
 
-AI.prototype.changeLevel = function() {
-  this.level = this.level === "easy" ? "hard" : "easy"
+AI.prototype.changeLevel = function(level) {
+  this.level = level
 }
 
 AI.prototype.checkForWin = function(plays, arr) {
@@ -101,6 +101,31 @@ AI.prototype.checkBlock = function(plays) {
 
 AI.prototype.play = function(Board) {
   if (this.level === "hard") {
+    // the second move determines if a draw can be forced:
+    //   if the first move takes a corner, second has to take center
+    //   if the first move takes center, second has to take a corner
+
+    // seeing if only 1 move has been played by getting all values that are
+    // not null and seeing if there is only 1
+    // TODO this seems hacky. Should be a better way to do this.
+    var isFirstMove =
+      Object.values(Board.plays).filter(play => play !== null).length === 1
+
+    if (isFirstMove) {
+      var cornerPlays = ["square1", "square3", "square7", "square9"]
+      if (Board.plays.square5 !== null) {
+        return cornerPlays[Math.floor(Math.random() * cornerPlays.length)]
+      }
+
+      for (var i = 0; i < cornerPlays.length; i++) {
+        if (Board.plays[cornerPlays[i]] !== null) {
+          return "square5"
+        }
+      }
+    }
+  }
+
+  if (this.level === "medium" || this.level === "hard") {
     // Check for a win, and if available play it
     var availableWin = this.checkForWin(Board.plays)
     if (availableWin) return availableWin

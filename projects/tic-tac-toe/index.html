@@ -11,7 +11,7 @@
       table {
         border-collapse: true;
         margin: auto;
-        margin-top: 50px;
+        margin-top: 5px;
       }
 
       td {
@@ -40,11 +40,8 @@
       }
 
       .toggle-button-container {
-        border-radius: 10px;
-        overflow: hidden;
-        display: flex;
-        border: thin solid black;
-        margin: 0 10px;
+        width: 100px;
+        margin: auto;
       }
       .toggle-button {
         background: #ddd;
@@ -63,13 +60,13 @@
   <body>
 
     <div class="game-container">
-      <div data-game-level="easy" class="easy-hard">
-        <div>Easy</div>
-        <div class="toggle-button-container">
-          <div class="toggle-button active"></div>
-          <div class="toggle-button"></div>
-        </div>
-        <div>Hard</div>
+      <div class="toggle-button-container">
+        <label class="control-label" for="difficulty">difficulty level</label>
+        <select id="difficulty" class="form-control">
+          <option value='easy'>Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
       </div>
       <table>
         <tbody><tr>
@@ -114,13 +111,11 @@
     <script src="index.js"></script>
     <script>
 var game = new Game()
-$('.easy-hard').click(function() {
-  var currentLevel = $(this).data('game-level')
-  $(this).data('game-level', currentLevel === 'easy' ? 'hard' : 'easy')
-  $('.toggle-button').toggleClass('active')
-  game.AI.changeLevel()
-
+$('#difficulty').change(function() {
+  var currentLevel = $(this).val()
+  game.AI.changeLevel(currentLevel)
 })
+
 $("td").click(function() {
   var id = $(this).attr("id")
   // ignore click if there is alread a play here
