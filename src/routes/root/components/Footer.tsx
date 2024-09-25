@@ -12,7 +12,7 @@ import { Link as RouterLink } from "react-router-dom"
 export const Footer = () => {
   const year = new Date().getFullYear()
   const theme = useTheme()
-  console.log(theme)
+
   return (
     <footer
       style={{ background: theme.palette.primary.main, marginTop: "auto" }}
@@ -48,8 +48,8 @@ export const Footer = () => {
               <FooterLink to="/">
                 <Typography>Home Page</Typography>
               </FooterLink>
-              <FooterLink to="/about">
-                <Typography>About</Typography>
+              <FooterLink to="/my-story">
+                <Typography>My Story</Typography>
               </FooterLink>
               <FooterLink to="/projects">
                 <Typography>Projects</Typography>
