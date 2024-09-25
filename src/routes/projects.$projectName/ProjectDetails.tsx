@@ -13,18 +13,14 @@ import { MissionBuilderDetails } from "./components/MissionBuilder"
 import { KhanSkillLinkerDetails } from "./components/KhanSkillLinker"
 import { KhanVideoLinkerDetails } from "./components/KhanVideoLinker"
 import { GradesyncerDetails } from "./components/GradeSyncer"
+import { KhanGraphQLDetails } from "./components/KhanGraphQL"
 
 export const ProjectDetails = () => {
   const { projectName } = useParams()
   const navigate = useNavigate()
 
   return (
-    <Dialog
-      fullWidth
-      maxWidth="lg"
-      open={true}
-      onClose={() => navigate("..", { replace: true })}
-    >
+    <Dialog fullWidth maxWidth="lg" open={true} onClose={() => navigate(-1)}>
       <DialogBody projectName={projectName!} />
     </Dialog>
   )
@@ -47,6 +43,7 @@ const DialogBody = (props: { projectName: string }) => {
         .with("khan-skill-linker", () => <KhanSkillLinkerDetails />)
         .with("khan-video-linker", () => <KhanVideoLinkerDetails />)
         .with("gradesyncer", () => <GradesyncerDetails />)
+        .with("khan-graphql", () => <KhanGraphQLDetails />)
         .otherwise(() => (
           <div>404</div>
         ))}
@@ -54,7 +51,7 @@ const DialogBody = (props: { projectName: string }) => {
         <Button
           variant="contained"
           color="secondary"
-          onClick={() => navigate("..", { replace: true })}
+          onClick={() => navigate(-1)}
         >
           Close
         </Button>

@@ -9,6 +9,7 @@ import missionBuilderUrl from "@assets/images/mission-builder.png"
 import khanSkillLinkerUrl from "@assets/images/khan_skill_linker.png"
 import khanVideoLinkerUrl from "@assets/images/khan-video-linker.png"
 import gradesyncerUrl from "@assets/images/gradesyncer.png"
+import khanGraphqlUrl from "@assets/images/khan-graphql.png"
 
 export const projects = [
   {
@@ -131,5 +132,16 @@ export const projects = [
     link: "/projects/mockimon",
     date: "2023-12-02",
     type: "active",
+  },
+  {
+    id: "khan-graphql",
+    title: "Khan GraphQL",
+    description:
+      "A layer over Khan Academy's API to make it easier to query for data.",
+    imgSrc: khanGraphqlUrl,
+    tags: ["Node", "GraphQL", "API"],
+    link: "/projects/khan-graphql",
+    date: "2024-08-25",
+    type: "legacy",
   },
 ]

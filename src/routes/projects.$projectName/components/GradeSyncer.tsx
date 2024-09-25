@@ -1,6 +1,7 @@
 import { projects } from "../../../data/projects"
 import { Box, Divider, Stack, Typography } from "@mui/material"
 import { ProjectImage } from "./project-image"
+import gradesyncerUrl from "@assets/screenshots/grade-syncer.png"
 
 export const GradesyncerDetails = () => {
   const project = projects.find((project) => project.id === "gradesyncer")!
@@ -68,8 +69,9 @@ export const GradesyncerDetails = () => {
         </Typography>
         <Typography>
           This was always a private project, and only worked with our LMS, so
-          there is no demo available.
+          there is no demo available, but here is a screenshot:
         </Typography>
+        <ProjectImage src={gradesyncerUrl} />
       </Box>
     </Stack>
   )

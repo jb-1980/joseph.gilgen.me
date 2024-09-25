@@ -1,6 +1,7 @@
 import { projects } from "../../../data/projects"
 import { Box, Divider, Stack, Typography } from "@mui/material"
 import { ProjectImage } from "./project-image"
+import studenttrackerScreenshotUrl from "@assets/screenshots/student-tracker.png"
 
 export const StudentTrackerDetails = () => {
   const project = projects.find((project) => project.id === "student-tracker")!
@@ -75,8 +76,10 @@ export const StudentTrackerDetails = () => {
         </Typography>
         <Typography>
           I hope to get a demo up soon, but I need to change up the server code
-          to serve mock data instead of actual student data.
+          to serve mock data instead of actual student data. But until then,
+          enjoy a screenshot I made a while back:
         </Typography>
+        <ProjectImage src={studenttrackerScreenshotUrl} />
       </Box>
     </Stack>
   )

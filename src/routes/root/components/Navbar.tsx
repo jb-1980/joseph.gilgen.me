@@ -24,18 +24,21 @@ export function Navbar() {
         </Typography>
         <Button
           component={NavLink}
-          to="/about"
+          to="/my-story"
           sx={(theme) => ({
             "&.active": {
               color: "primary.main",
               borderRadius: 0,
               borderBottom: `2px solid ${theme.palette.secondary.main}`,
             },
+            "&:hover": {
+              color: "secondary.main",
+            },
           })}
           style={{ padding: "0 8px" }}
           color="inherit"
         >
-          About
+          My Story
         </Button>
         <Button
           component={NavLink}
@@ -45,6 +48,9 @@ export function Navbar() {
               color: "primary.main",
               borderRadius: 0,
               borderBottom: `2px solid ${theme.palette.secondary.main}`,
+            },
+            "&:hover": {
+              color: "secondary.main",
             },
           })}
           style={{ padding: "0 8px" }}

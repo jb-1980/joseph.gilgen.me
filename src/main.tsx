@@ -4,22 +4,14 @@ import "./styles.css"
 import { RouterProvider, createBrowserRouter } from "react-router-dom"
 import { RootRoute } from "./routes/root/route"
 import { IndexRoute } from "./routes/index/route"
-import "@fontsource/roboto/300.css"
-import "@fontsource/roboto/400.css"
-import "@fontsource/roboto/500.css"
-import "@fontsource/roboto/700.css"
-import "@fontsource/righteous/400.css"
-// import { LoginRoute } from "./routes/login/route"
-// import { SignupRoute } from "./routes/signup/route"
-// import { GamesIdRoute } from "./routes/_games.$gameId/route"
-// import { LogoutRoute } from "./routes/logout/route"
 import { ThemeProvider } from "@emotion/react"
 import { createTheme } from "@mui/material"
 import { ProjectsRoute } from "./routes/projects/route"
 import { ProjectDetailsRoute } from "./routes/projects.$projectName/route"
-// import { GamesRoute } from "./routes/games/route"
-// import { QueryClientProvier } from "./lib/react-query"
-// import { GameReviewRoute } from "./routes/_games._$gameId.review/route"
+import { MyStoryRoute } from "./routes/my-story/route"
+// Supports weights 100-900
+import "@fontsource-variable/inter/opsz-italic.css"
+import "@fontsource/righteous"
 
 const theme = createTheme({
   palette: {
@@ -46,7 +38,11 @@ if (!rootElement) {
 }
 
 const router = createBrowserRouter([
-  RootRoute([IndexRoute(), ProjectsRoute([ProjectDetailsRoute()])]),
+  RootRoute([
+    IndexRoute(),
+    ProjectsRoute([ProjectDetailsRoute()]),
+    MyStoryRoute(),
+  ]),
 ])
 
 ReactDOM.createRoot(rootElement).render(

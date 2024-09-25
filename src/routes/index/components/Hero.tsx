@@ -8,6 +8,9 @@ export const Hero = () => {
         bgcolor: "primary.light",
         padding: 2,
         borderRadius: 2,
+        color: "primary.contrastText",
+        border: 2,
+        borderColor: "primary.main",
       }}
       alignItems="center"
       justifyContent="center"
@@ -19,9 +22,9 @@ export const Hero = () => {
           color="secondary"
           variant="contained"
           component={Link}
-          to="/about"
+          to="/my-story"
         >
-          About
+          My Story
         </Button>
         <Button
           color="secondary"
